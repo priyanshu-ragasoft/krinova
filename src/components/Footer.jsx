@@ -165,7 +165,7 @@ export default function Footer() {
 
       <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-x-10 gap-y-12 px-8 pt-16 pb-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <motion.div variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'} custom={0.05}>
-          <div className="mb-5 origin-left scale-[1.8]">
+          <div className="mb-5 w-fit">
             <BrandLogo size="lg" />
           </div>
           <p className="mb-7 max-w-[240px] text-[13.5px] leading-[1.75] text-white/40">
@@ -198,8 +198,8 @@ export default function Footer() {
               {items.map(({ label, to }) => (
                 <li key={label}>
                   <Link
-                    to={to}
-                    className="group inline-flex items-center gap-1.5 text-[13.5px] text-white/45 no-underline transition-colors hover:text-[#C9A259]"
+                    to={to.includes('#') ? { pathname: to.split('#')[0], hash: to.split('#')[1] } : to}
+                    className="relative z-[1] group inline-flex items-center gap-1.5 text-[13.5px] text-white/45 no-underline transition-colors hover:text-[#C9A259]"
                   >
                     <span className="inline-block h-px w-[5px] shrink-0 bg-[#C9A259]/50 transition-all group-hover:w-3 group-hover:bg-[#C9A259]" />
                     {label}

@@ -128,6 +128,7 @@ function TiltCard({ service }) {
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5 }}
       id={service.id}
+      className="scroll-mt-28"
       style={{ perspective: 1000 }}
     >
       <div 
@@ -306,7 +307,7 @@ export default function Services() {
     if (id) {
       const t = setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 80);
+      }, 280);
       return () => clearTimeout(t);
     }
     window.scrollTo(0, 0);

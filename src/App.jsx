@@ -22,7 +22,7 @@ function ScrollToTop() {
       const id = hash.replace('#', '');
       const t = setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 80);
+      }, 280);
       return () => clearTimeout(t);
     }
     window.scrollTo(0, 0);
