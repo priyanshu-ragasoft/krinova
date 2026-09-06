@@ -204,7 +204,7 @@ function TeamRow({ name, role, bio, image, reverse }) {
           alt={name}
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover object-[center_12%] grayscale transition duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
+          className="absolute inset-0 h-full w-full origin-top object-cover object-top grayscale transition duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
         />
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-6">
           <p className="text-xs font-bold tracking-widest uppercase text-[#C6A15B]">{role}</p>
