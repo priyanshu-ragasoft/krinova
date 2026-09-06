@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const sizeClass = {
-  sm: 'h-11',
-  md: 'h-[72px]',
-  lg: 'h-[88px]',
+  sm: 'h-9',
+  md: 'h-11',
+  lg: 'h-14 md:h-[72px]',
 };
 
 export default function BrandLogo({ size = 'md', asLink = true }) {

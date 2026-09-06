@@ -49,7 +49,7 @@ export default function Navbar() {
             : 'bg-gradient-to-b from-black/55 to-transparent'
         }`}
       >
-        <div className="mx-auto flex h-[88px] max-w-[1280px] items-center justify-between px-8">
+        <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 md:h-[88px] md:px-8">
           <BrandLogo size="lg" />
 
           <nav className="hidden items-center gap-1 lg:flex">
@@ -89,7 +89,7 @@ export default function Navbar() {
           <button
             onClick={() => setIsOpen(true)}
             aria-label="Open menu"
-            className="flex size-[42px] items-center justify-center rounded-md border border-white/20 bg-white/[0.06] text-white backdrop-blur-sm lg:hidden"
+            className="relative z-[1] flex size-10 items-center justify-center rounded-md border border-white/20 bg-white/[0.06] text-white lg:hidden"
           >
             <Menu size={20} />
           </button>
@@ -106,7 +106,7 @@ export default function Navbar() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.28 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 z-60 bg-black/70 backdrop-blur-[4px]"
+              className="fixed inset-0 z-[210] bg-black/75 backdrop-blur-[4px]"
             />
 
             <motion.aside
@@ -117,18 +117,18 @@ export default function Navbar() {
               transition={{ type: 'spring', damping: 28, stiffness: 250 }}
               role="dialog"
               aria-modal="true"
-              className="fixed top-0 right-0 z-70 flex h-full w-[min(85vw,320px)] flex-col border-l border-[#C9A259]/20 bg-[#0e0c0a]"
+              className="fixed inset-0 z-[220] flex h-dvh w-full flex-col bg-[#0e0c0a] md:inset-auto md:top-0 md:right-0 md:h-full md:w-[min(85vw,320px)] md:border-l md:border-[#C9A259]/20"
             >
               <div className="pointer-events-none absolute top-0 right-0 size-[200px] bg-[radial-gradient(circle_at_top_right,rgba(201,162,89,0.12),transparent_70%)]" />
 
-              <div className="flex h-20 items-center justify-between border-b border-white/[0.07] px-5">
-                <BrandLogo size="md" asLink={false} />
+              <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/[0.07] px-4">
+                <BrandLogo size="sm" asLink={false} />
                 <button
                   onClick={() => setIsOpen(false)}
                   aria-label="Close"
-                  className="flex size-9 items-center justify-center rounded-md border border-white/10 bg-white/[0.04] text-white/60 transition-colors hover:border-[#C9A259]/50 hover:text-white"
+                  className="flex size-10 items-center justify-center rounded-md border border-white/10 bg-white/[0.04] text-white/70"
                 >
-                  <X size={16} />
+                  <X size={18} />
                 </button>
               </div>
 
@@ -136,9 +136,9 @@ export default function Navbar() {
                 variants={stagger}
                 initial="hidden"
                 animate="show"
-                className="flex flex-1 flex-col gap-1 px-5 py-7"
+                className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-4 py-5"
               >
-                <p className="mb-3 pl-3 text-[9px] font-bold uppercase tracking-[0.32em] text-[#C9A259]/60">
+                <p className="mb-2 px-3 text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A259]/70">
                   Menu
                 </p>
 
@@ -149,14 +149,14 @@ export default function Navbar() {
                       <Link
                         to={to}
                         onClick={() => setIsOpen(false)}
-                        className={`flex items-center justify-between rounded-lg px-4 py-3.5 text-[13px] font-semibold uppercase tracking-[0.1em] no-underline transition-colors ${
+                        className={`flex items-center justify-between rounded-lg px-3 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] no-underline ${
                           isActive
-                            ? 'border-l-2 border-[#C9A259] bg-[#C9A259]/10 text-[#C9A259]'
-                            : 'border-l-2 border-transparent text-white/65'
+                            ? 'bg-[#C9A259]/12 text-[#C9A259]'
+                            : 'text-white/70'
                         }`}
                       >
                         {name}
-                        <span className="size-1.5 rounded-full bg-current opacity-35" />
+                        {isActive && <span className="size-1.5 rounded-full bg-[#C9A259]" />}
                       </Link>
                     </motion.div>
                   );
