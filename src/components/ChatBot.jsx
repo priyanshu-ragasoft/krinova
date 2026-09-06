@@ -1,8 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import { X, Send } from 'lucide-react';
+import { divisions } from '../data/divisions';
 
 const WA = 'https://wa.me/917347535399';
 const PHONE = '+91 73475 35399';
+const TEL = 'tel:+917347535399';
+const MAIL = 'mailto:contact@krinova.com';
+
+function nextStepChips(topic) {
+  const note = `Hi Krinova — I would like to talk about ${topic}.`;
+  return [
+    { label: 'Services' },
+    { label: 'WhatsApp', href: `${WA}?text=${encodeURIComponent(note)}` },
+    { label: 'Call', href: TEL },
+    { label: 'Email', href: MAIL },
+  ];
+}
 
 const rules = [
   {
@@ -23,7 +36,11 @@ const rules = [
   },
   {
     test: /service|kya karte|what do you|offer|kaam|\bhelp\b/,
-    reply: 'We build brands and the systems around them: identity, digital experience, search, performance, content, reputation, and automation. Tell us where you are, and we will point to the right desk.',
+    reply: [
+      'The studio works across these desks. Name one, and I will take you further.',
+      '',
+      ...divisions.map((d, i) => `${String(i + 1).padStart(2, '0')}  ${d.title}`),
+    ].join('\n'),
   },
   {
     test: /seo|search|google|chatgpt|gemini|aeo|geo/,
@@ -106,13 +123,26 @@ function replyTo(text) {
   return `Noted. I can speak to services, investment, the Zirakpur studio, and hours. A line on what you sell — or Talk on WhatsApp below — is enough for a founder to continue. ${PHONE}.`;
 }
 
-const starters = ['Services', 'Investment', 'Studio', 'WhatsApp'];
+const starters = [
+  { label: 'Services' },
+  { label: 'Investment' },
+  { label: 'Studio' },
+  { label: 'WhatsApp', href: WA },
+];
 const welcomeFollowUp = 'Ask about the work, investment, or the studio. For a founder, use Talk on WhatsApp below.';
+const nextStepLine = [
+  'To continue with a founder:',
+  '',
+  `WhatsApp / Call  ${PHONE}`,
+  'Email  contact@krinova.com',
+  'Studio  Cosmo Mall, Zirakpur',
+].join('\n');
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
+  const [chips, setChips] = useState(starters);
   const [messages, setMessages] = useState([
     { from: 'bot', text: 'Welcome to Krinova. How can the studio be of use — brand, digital, or growth?' },
   ]);
@@ -160,10 +190,31 @@ export default function ChatBot() {
     if (!text || typing) return;
     setMessages((m) => [...m, { from: 'user', text }]);
     setInput('');
+
+    if (/^services?$/i.test(text) || /kya karte|what do you/i.test(text)) {
+      setChips(divisions.map((d) => ({ label: d.title })));
+      pushBot(replyTo(text));
+      return;
+    }
+
+    const desk = divisions.find((d) => d.title.toLowerCase() === text.toLowerCase());
+    const pickedDesk = Boolean(desk);
+    const pickedOther = /investment|studio|pricing|price|zirakpur/i.test(text);
+
+    if (pickedDesk || pickedOther) {
+      setChips(nextStepChips(desk?.title || text));
+      pushBot(replyTo(text));
+      window.setTimeout(() => {
+        setMessages((m) => [...m, { from: 'bot', text: nextStepLine }]);
+      }, 700);
+      return;
+    }
+
     if (/whatsapp/i.test(text)) {
       pushBot(`Continue with a founder on WhatsApp — ${PHONE} — or the link just below.`);
       return;
     }
+
     pushBot(replyTo(text));
   };
 
@@ -217,7 +268,7 @@ export default function ChatBot() {
                       : 'rounded-bl-md border border-black/6 bg-white text-[#2a2a2a] shadow-[0_1px_2px_rgba(0,0,0,0.04)]'
                   }`}
                 >
-                  {m.text}
+                  <span className="whitespace-pre-line">{m.text}</span>
                 </div>
               </div>
             ))}
@@ -234,16 +285,23 @@ export default function ChatBot() {
           </div>
 
           <div className="flex shrink-0 flex-wrap gap-1.5 px-3.5 pb-2">
-            {starters.map((s) => (
-              <button
-                key={s}
-                type="button"
-                onClick={() => send(s)}
-                className="rounded-full border border-black/10 bg-white px-3 py-1 text-[11px] font-medium text-[#444] hover:border-[#C9A259] hover:text-[#8a6d2e]"
-              >
-                {s}
-              </button>
-            ))}
+            {chips.map((s) => {
+              const label = s.label;
+              const chipClass =
+                'rounded-full border border-black/10 bg-white px-3 py-1.5 text-[11px] font-medium text-[#444] no-underline hover:border-[#C9A259] hover:text-[#8a6d2e]';
+              if (s.href) {
+                return (
+                  <a key={label} href={s.href} target={s.href.startsWith('tel:') ? undefined : '_blank'} rel="noreferrer" className={chipClass}>
+                    {label}
+                  </a>
+                );
+              }
+              return (
+                <button key={label} type="button" onClick={() => send(label)} className={chipClass}>
+                  {label}
+                </button>
+              );
+            })}
           </div>
 
           <div className="shrink-0 bg-white px-3 pb-3 pt-2">
