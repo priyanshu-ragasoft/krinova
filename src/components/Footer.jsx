@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
-import { Phone, Mail, MapPin, ArrowUpRight, Send } from 'lucide-react';
+import { Phone, Mail, MapPin, ArrowUpRight, Send, MessageCircle } from 'lucide-react';
 import BrandLogo from './BrandLogo';
+import { CALL_DISPLAY, CALL_HREF, WA_DISPLAY, WA_HREF, EMAIL } from '../data/contact';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -63,8 +64,9 @@ const socials = [
 ];
 
 const contact = [
-  { Icon: Phone, text: '+91 73475 35399' },
-  { Icon: Mail, text: 'contact@krinova.com' },
+  { Icon: Phone, text: CALL_DISPLAY, href: CALL_HREF },
+  { Icon: MessageCircle, text: `WhatsApp ${WA_DISPLAY}`, href: WA_HREF },
+  { Icon: Mail, text: EMAIL, href: `mailto:${EMAIL}` },
   { Icon: MapPin, text: 'Cosmo Mall, Zirakpur' },
 ];
 
@@ -211,12 +213,18 @@ export default function Footer() {
         <motion.div variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'} custom={0.28}>
           <p className={colTitle}>Get In Touch</p>
           <ul className="m-0 flex list-none flex-col gap-4 p-0">
-            {contact.map(({ Icon, text }) => (
+            {contact.map(({ Icon, text, href }) => (
               <li key={text} className="flex items-center gap-3">
                 <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-[7px] border border-[#C9A259]/25 bg-[#C9A259]/[0.07] text-[#C9A259]">
                   <Icon size={13} />
                 </span>
-                <span className="text-[13px] text-white/45">{text}</span>
+                {href ? (
+                  <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="text-[13px] text-white/45 no-underline hover:text-[#C9A259]">
+                    {text}
+                  </a>
+                ) : (
+                  <span className="text-[13px] text-white/45">{text}</span>
+                )}
               </li>
             ))}
           </ul>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, MessageCircle } from 'lucide-react';
+import { CALL_DISPLAY, CALL_HREF, WA_DISPLAY, WA_HREF, EMAIL } from '../data/contact';
 
 function ContactForm() {
   const [formState, setFormState] = useState('idle');
@@ -14,7 +15,7 @@ function ContactForm() {
     const help = data.get('help')?.toString().trim() || '';
     const message = data.get('message')?.toString().trim() || '';
     const text = `Hi Krinova, I'm ${first} ${last}.\nEmail: ${email}\nNeed: ${help}\n\n${message}`;
-    window.open(`https://wa.me/917347535399?text=${encodeURIComponent(text)}`, '_blank');
+    window.open(`${WA_HREF}?text=${encodeURIComponent(text)}`, '_blank');
     setFormState('success');
   };
 
@@ -29,7 +30,7 @@ function ContactForm() {
           <svg className="w-8 h-8 text-[#0B1F3A]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
         </div>
         <h3 className="text-3xl font-serif font-bold mb-4">Message Received</h3>
-        <p className="text-white/70">WhatsApp should have opened with your note. If it didn’t, call +91 73475 35399 or email contact@krinova.com.</p>
+        <p className="text-white/70">WhatsApp should have opened ({WA_DISPLAY}). If it didn’t, call {CALL_DISPLAY} or email {EMAIL}.</p>
         <button onClick={() => setFormState('idle')} className="mt-8 text-[#C6A15B] font-bold text-sm uppercase tracking-widest hover:text-white transition-colors">
           Send Another Message
         </button>
@@ -110,7 +111,7 @@ function ContactInfo() {
           </div>
           <div>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Email Us</p>
-            <p className="text-[#0B1F3A] font-bold text-lg">contact@krinova.com</p>
+            <p className="text-[#0B1F3A] font-bold text-lg">{EMAIL}</p>
           </div>
         </div>
 
@@ -120,8 +121,17 @@ function ContactInfo() {
           </div>
           <div>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Call Us</p>
-            <p className="text-[#0B1F3A] font-bold text-lg">+91 73475 35399</p>
-            <p className="text-[#0B1F3A] font-bold text-lg">+91 8091 555355</p>
+            <a href={CALL_HREF} className="text-[#0B1F3A] font-bold text-lg no-underline hover:text-[#C6A15B]">{CALL_DISPLAY}</a>
+          </div>
+        </div>
+
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_4px_14px_rgba(0,0,0,0.05)] shrink-0">
+            <MessageCircle size={20} className="text-[#C6A15B]" />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">WhatsApp</p>
+            <a href={WA_HREF} target="_blank" rel="noreferrer" className="text-[#0B1F3A] font-bold text-lg no-underline hover:text-[#C6A15B]">{WA_DISPLAY}</a>
           </div>
         </div>
 

@@ -15,7 +15,7 @@ export default function Privacy() {
           <p>If you write us — form, WhatsApp, or email — we use that note to reply. We don’t sell your details, and we don’t run a mailing list you didn’t ask for.</p>
           <p>The contact form opens WhatsApp with what you typed. That message lives on your phone and ours, same as any chat.</p>
           <p>This site uses only what the browser needs to load. No extra trackers we added for ads.</p>
-          <p>Questions: <a href="mailto:contact@krinova.com" className="text-[#C9A259] no-underline hover:underline">contact@krinova.com</a> or +91 73475 35399. Studio: Cosmo Mall, Zirakpur.</p>
+          <p>Questions: <a href="mailto:contact@krinova.com" className="text-[#C9A259] no-underline hover:underline">contact@krinova.com</a>, call +91 73475 35399, or WhatsApp +91 8091 555355. Studio: Cosmo Mall, Zirakpur.</p>
         </div>
         <Link to="/contact" className="btn-ghost mt-12">Write us</Link>
       </article>

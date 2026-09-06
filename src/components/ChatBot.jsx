@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { X, Send } from 'lucide-react';
 import { divisions } from '../data/divisions';
+import { CALL_DISPLAY, CALL_HREF, WA_DISPLAY, WA_HREF, EMAIL } from '../data/contact';
 
-const WA = 'https://wa.me/917347535399';
-const PHONE = '+91 73475 35399';
-const TEL = 'tel:+917347535399';
-const MAIL = 'mailto:contact@krinova.com';
+const WA = WA_HREF;
+const PHONE = CALL_DISPLAY;
+const TEL = CALL_HREF;
+const MAIL = `mailto:${EMAIL}`;
 
 function nextStepChips(topic) {
   const note = `Hi Krinova — I would like to talk about ${topic}.`;
@@ -20,7 +21,7 @@ function nextStepChips(topic) {
 const rules = [
   {
     test: /whatsapp|wa\b|call|phone|number|contact|email|mail/,
-    reply: `A founder is on ${PHONE}, WhatsApp, and contact@krinova.com. Use Talk on WhatsApp below if you would rather write than call.`,
+    reply: `Call ${PHONE}. WhatsApp ${WA_DISPLAY}. Email ${EMAIL}. Use the chips below — WhatsApp and call are different numbers.`,
   },
   {
     test: /price|pricing|cost|budget|rate|kitna|charge|quote|fee|fees|investment/,
@@ -120,7 +121,7 @@ function replyTo(text) {
   const t = text.toLowerCase().trim();
   const hit = rules.find((r) => r.test.test(t));
   if (hit) return hit.reply;
-  return `Noted. I can speak to services, investment, the Zirakpur studio, and hours. A line on what you sell — or Talk on WhatsApp below — is enough for a founder to continue. ${PHONE}.`;
+  return `Noted. I can speak to services, investment, the studio, and hours. WhatsApp ${WA_DISPLAY}, or call ${PHONE}.`;
 }
 
 const starters = [
@@ -133,8 +134,9 @@ const welcomeFollowUp = 'Ask about the work, investment, or the studio. For a fo
 const nextStepLine = [
   'To continue with a founder:',
   '',
-  `WhatsApp / Call  ${PHONE}`,
-  'Email  contact@krinova.com',
+  `WhatsApp  ${WA_DISPLAY}`,
+  `Call  ${PHONE}`,
+  `Email  ${EMAIL}`,
   'Studio  Cosmo Mall, Zirakpur',
 ].join('\n');
 
@@ -211,7 +213,7 @@ export default function ChatBot() {
     }
 
     if (/whatsapp/i.test(text)) {
-      pushBot(`Continue with a founder on WhatsApp — ${PHONE} — or the link just below.`);
+      pushBot(`WhatsApp ${WA_DISPLAY}. To call instead, ${PHONE}.`);
       return;
     }
 
