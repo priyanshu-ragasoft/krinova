@@ -7,95 +7,95 @@ const PHONE = '+91 73475 35399';
 const rules = [
   {
     test: /whatsapp|wa\b|call|phone|number|contact|email|mail/,
-    reply: `Phone / WhatsApp: ${PHONE}. Email: contact@krinova.com. Use Talk on WhatsApp under the box if you want a founder.`,
+    reply: `A founder is on ${PHONE}, WhatsApp, and contact@krinova.com. Use Talk on WhatsApp below if you would rather write than call.`,
   },
   {
-    test: /price|pricing|cost|budget|rate|kitna|charge|quote|fee|fees/,
-    reply: 'No fixed menu. Write 2–3 lines — site, ads, or brand — and we quote on a call. Typical start is a scoped brief, not a package list.',
+    test: /price|pricing|cost|budget|rate|kitna|charge|quote|fee|fees|investment/,
+    reply: 'We do not publish a rate card. Share the brief — brand, site, or growth — and we will return a scoped proposal after a short call.',
   },
   {
     test: /where|location|zirakpur|office|mall|address|visit|map|chandigarh|mohali|panchkula/,
-    reply: 'Studio: Cosmo Mall, Zirakpur (Tricity). Call first and fix a time — Raghvendra or Kishan will meet you.',
+    reply: 'The studio is in Cosmo Mall, Zirakpur, serving the Tricity. Appointments are by arrangement — Raghvendra or Kishan will receive you.',
   },
   {
     test: /\bhours?\b|timing|available|sunday|weekend|\bmonday\b/,
-    reply: 'Weekdays 10:30am–7pm IST. Weekends by appointment. After hours, WhatsApp still lands with the founders.',
+    reply: 'The desk is open weekdays, 10:30–19:00 IST. Weekends by appointment. After hours, WhatsApp still reaches the founders.',
   },
   {
     test: /service|kya karte|what do you|offer|kaam|\bhelp\b/,
-    reply: 'Brand, identity, websites, ads, search (Google + ChatGPT), content, social, reviews, automation, Web3. Pick one — or tap a chip below.',
+    reply: 'We build brands and the systems around them: identity, digital experience, search, performance, content, reputation, and automation. Tell us where you are, and we will point to the right desk.',
   },
   {
     test: /seo|search|google|chatgpt|gemini|aeo|geo/,
-    reply: 'Search Everywhere: Google plus when people ask ChatGPT / Gemini. Local SEO and listings sit with Reputation Desk.',
+    reply: 'Search Everywhere covers Google and the places people now ask — ChatGPT, Gemini, and the rest. Local presence sits with Reputation Desk.',
   },
   {
     test: /meta ads|google ads|youtube ads|linkedin ads|performance|ppc|advert/,
-    reply: 'Performance Lab: ads only if they produce leads or sales. What isn’t paying, we switch off.',
+    reply: 'Performance Lab runs media for pipeline and revenue. Spend that does not earn its place is retired. A one-page brief is enough to start.',
   },
   {
     test: /\bads?\b|facebook|instagram ads|leads?/,
-    reply: 'Ads for leads and sales — Meta, Google, YouTube, LinkedIn. Brief us here, we say if it is worth running.',
+    reply: 'We plan and run Meta, Google, YouTube, and LinkedIn. The test is simple: does it produce qualified demand? If you share the product, we will say whether it is worth the spend.',
   },
   {
     test: /web\b|website|site|landing|ecommerce|e-commerce|ui\/?ux/,
-    reply: 'Digital Experience: sites that load and make the next step obvious. Send a brief or a screenshot.',
+    reply: 'Digital Experience: sites and product surfaces that load, read cleanly, and make the next step obvious. A URL or a short brief is a good place to begin.',
   },
   {
     test: /logo|identity|packag|deck|guideline|visual/,
-    reply: 'Identity Studio: mark, colours, type, packs, decks — one look, not five versions.',
+    reply: 'Identity Studio holds the mark, colour, type, packaging, and decks — one system, used everywhere. References are welcome if you have them.',
   },
   {
     test: /brand|position|naming|voice|strategy/,
-    reply: 'Brand Intelligence: who you are, who you sell to, why they pick you — written so the team can actually use it.',
+    reply: 'Brand Intelligence defines who you are, whom you serve, and why you are chosen — written so the organisation can actually use it.',
   },
   {
     test: /reel|youtube|content|creator|video|ugc|influencer/,
-    reply: 'Content & Creator Studio: reels, YouTube, founder videos — things people watch, not a leftover calendar.',
+    reply: 'Content & Creator Studio produces work people finish: film, short-form, founder presence, and partnerships. Not a calendar that expires in week two.',
   },
   {
     test: /social|instagram|linkedin|facebook|\bdms?\b/,
-    reply: 'Social Desk: Instagram, LinkedIn, DMs — a week of posts you can keep. Reputation Desk covers Google reviews.',
+    reply: 'Social Desk keeps Instagram and LinkedIn alive — publishing and correspondence. Reviews and Maps are handled separately by Reputation Desk.',
   },
   {
     test: /review|reputation|maps|gbp|google business/,
-    reply: 'Reputation Desk: Google reviews, Maps, listings. We ask, we reply, we keep it honest.',
+    reply: 'Reputation Desk looks after Google Business, Maps, and reviews: the request, the reply, the listing. Quiet, consistent, accurate.',
   },
   {
     test: /automat|crm|follow.?up|whatsapp automat/,
-    reply: 'Automation: WhatsApp, CRM, email follow-up that happens without someone chasing it every night.',
+    reply: 'Automation connects WhatsApp, CRM, and email so follow-up happens without someone chasing it at midnight.',
   },
   {
     test: /ai\b|chatbot|agent/,
-    reply: 'AI Growth: drafts, chat, follow-ups that save time. Not a slide that says “we use AI”.',
+    reply: 'AI Growth is used where it saves time — drafts, qualification, follow-up. We do not sell the word “AI” as a service.',
   },
   {
     test: /web3|crypto|token|nft|discord/,
-    reply: 'Web3 & Crypto: launches, community, listings — said in plain language.',
+    reply: 'Web3 & Crypto: launch, community, and listings, spoken in plain language. Tell us the stage you are at.',
   },
   {
     test: /data|analytic|dashboard|roi|report|track/,
-    reply: 'Data & Growth Intelligence: tracking plus a short Monday note — what worked, what we cut. No 40-page PDF.',
+    reply: 'Growth Intelligence is a short weekly read: what held, what did not. Not a forty-page appendix.',
   },
   {
     test: /portfolio|work|case|client|project/,
-    reply: 'Work lives on the Portfolio page. For a live walkthrough of a similar brief, WhatsApp is faster.',
+    reply: 'Selected work is on the Portfolio page. If you want a conversation around a brief like yours, WhatsApp is the faster route.',
   },
   {
     test: /career|hiring|vacanc|\bjobs?\b|\bintern/,
-    reply: 'Open roles are on Careers. Apply there, or send a short note + CV link.',
+    reply: 'Open roles are listed under Careers. A short note and a CV link is enough — we read them.',
   },
   {
     test: /founder|raghvendra|kishan|team|who|cto|cmo/,
-    reply: 'Raghvendra — Founder & CTO. Kishan Kumar — Founder & CMO. Both sit in Zirakpur. About page has the rest.',
+    reply: 'Raghvendra, Founder & CTO. Kishan Kumar, Founder & CMO. Both work from Zirakpur. The About page has the rest.',
   },
   {
     test: /thank|thanks|shukriya|dhanyavad/,
-    reply: 'Done. Message again if something is still stuck.',
+    reply: 'Of course. We are here if you need the next step.',
   },
   {
     test: /^(hi|hii|hello|hey|namaste|hola)\b|good (morning|evening|afternoon)/,
-    reply: 'Hi — this is Krinova auto-reply. Brand, site, ads, search, or a visit: what do you need?',
+    reply: 'Good to have you. Brand, digital, growth, or a visit to the studio — what would you like to begin with?',
   },
 ];
 
@@ -103,18 +103,18 @@ function replyTo(text) {
   const t = text.toLowerCase().trim();
   const hit = rules.find((r) => r.test.test(t));
   if (hit) return hit.reply;
-  return `Got it. Auto-reply covers services, pricing, Zirakpur, hours, and ${PHONE}. Write what you sell and what is blocked — or talk on WhatsApp from below.`;
+  return `Noted. I can speak to services, investment, the Zirakpur studio, and hours. A line on what you sell — or Talk on WhatsApp below — is enough for a founder to continue. ${PHONE}.`;
 }
 
-const starters = ['Services', 'Pricing', 'Zirakpur', 'WhatsApp'];
-const welcomeFollowUp = 'I auto-reply on services, pricing, office, and hours. Ask anything — or talk to a founder on WhatsApp.';
+const starters = ['Services', 'Investment', 'Studio', 'WhatsApp'];
+const welcomeFollowUp = 'Ask about the work, investment, or the studio. For a founder, use Talk on WhatsApp below.';
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
   const [messages, setMessages] = useState([
-    { from: 'bot', text: "Hi. I'm the Krinova desk. How can I help with brand, site, or growth today?" },
+    { from: 'bot', text: 'Welcome to Krinova. How can the studio be of use — brand, digital, or growth?' },
   ]);
   const greeted = useRef(false);
   const endRef = useRef(null);
@@ -161,7 +161,7 @@ export default function ChatBot() {
     setMessages((m) => [...m, { from: 'user', text }]);
     setInput('');
     if (/whatsapp/i.test(text)) {
-      pushBot(`Talk on WhatsApp from the line under this box. ${PHONE}.`);
+      pushBot(`Continue with a founder on WhatsApp — ${PHONE} — or the link just below.`);
       return;
     }
     pushBot(replyTo(text));
