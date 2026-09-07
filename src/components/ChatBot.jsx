@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { X, Send } from 'lucide-react';
 import { divisions } from '../data/divisions';
-import { CALL_DISPLAY, CALL_HREF, WA_DISPLAY, WA_HREF, EMAIL } from '../data/contact';
+import { PHONES, CALL_HREF, WA_DISPLAY, WA_HREF, EMAIL } from '../data/contact';
 
 const WA = WA_HREF;
-const PHONE = CALL_DISPLAY;
+const PHONE = PHONES.map((p) => p.display).join(' or ');
 const TEL = CALL_HREF;
 const MAIL = `mailto:${EMAIL}`;
 

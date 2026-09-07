@@ -1,12 +1,24 @@
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { projects } from '../data/work';
+import { publicFetch, assetUrl } from '../lib/api';
 import PageTitle from '../components/PageTitle';
 
 export default function CaseStudy() {
-  const { id } = useParams();
-  const project = projects.find((p) => p.id === id);
+  const { slug } = useParams();
+  const [project, setProject] = useState(null);
+  const [missing, setMissing] = useState(false);
 
-  if (!project) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setProject(null);
+    setMissing(false);
+    publicFetch(`/portfolio/${slug}`).then(({ res, data }) => {
+      if (!res.ok) setMissing(true);
+      else setProject(data.project);
+    }).catch(() => setMissing(true));
+  }, [slug]);
+
+  if (missing) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-[#050505] px-6 text-center">
         <PageTitle title="Work not found — Krinova" />
@@ -16,11 +28,15 @@ export default function CaseStudy() {
     );
   }
 
+  if (!project) {
+    return <div className="min-h-screen bg-[#050505] pt-36 text-center text-white/40">Loading…</div>;
+  }
+
   const blocks = [
     { t: 'Problem', d: project.problem },
     { t: 'Work', d: project.work },
     { t: 'Result', d: project.result },
-  ];
+  ].filter((b) => b.d);
 
   return (
     <div className="min-h-screen bg-[#050505] pt-28 pb-24">
@@ -37,7 +53,7 @@ export default function CaseStudy() {
         </p>
         <h1 className="font-heading mt-3 mb-10 text-4xl font-bold text-white md:text-6xl">{project.title}</h1>
         <img
-          src={project.image}
+          src={assetUrl(project.image)}
           alt=""
           loading="lazy"
           decoding="async"

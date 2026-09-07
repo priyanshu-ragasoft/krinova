@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { publicFetch, assetUrl } from '../lib/api';
 
-const slides = [
+const FALLBACK_SLIDES = [
   {
     tagline: 'BUILD. DIFFERENTIATE. GROW.',
     heading: 'We build brands.\nThen we grow them.',
@@ -25,6 +26,12 @@ const slides = [
     image: '/banner2.png',
   },
 ];
+
+function slideImage(url) {
+  if (!url) return '';
+  if (url.startsWith('/uploads')) return assetUrl(url);
+  return url;
+}
 
 function AnimatedHeading({ text }) {
   const lines = text.split('\n');
@@ -49,6 +56,7 @@ function AnimatedHeading({ text }) {
 
 export default function HeroBanner() {
   const ref = useRef(null);
+  const [slides, setSlides] = useState(FALLBACK_SLIDES);
   const [active, setActive] = useState(0);
   const [auto, setAuto] = useState(true);
 
@@ -56,13 +64,24 @@ export default function HeroBanner() {
   const imgY = useTransform(scrollYProgress, [0, 1], ['0%', '40%']);
 
   useEffect(() => {
-    if (!auto) return;
+    publicFetch('/banners').then(({ res, data }) => {
+      if (res.ok && data.slides?.length) setSlides(data.slides);
+    }).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    setActive((a) => (slides.length ? a % slides.length : 0));
+  }, [slides.length]);
+
+  useEffect(() => {
+    if (!auto || slides.length < 2) return;
     const t = setInterval(() => setActive((a) => (a + 1) % slides.length), 5500);
     return () => clearInterval(t);
-  }, [auto]);
+  }, [auto, slides.length]);
 
   const goTo = (i) => { setActive(i); setAuto(false); };
   const slide = slides[active];
+  if (!slide) return null;
 
   return (
     <section
@@ -76,8 +95,8 @@ export default function HeroBanner() {
       >
         <AnimatePresence mode="wait">
           <motion.img
-            key={active}
-            src={slide.image}
+            key={slide.image + active}
+            src={slideImage(slide.image)}
             fetchPriority={active === 0 ? 'high' : 'low'}
             loading={active === 0 ? 'eager' : 'lazy'}
             decoding="async"
@@ -167,27 +186,29 @@ export default function HeroBanner() {
         </div>
       </motion.div>
 
-      <div className="absolute bottom-5 left-5 z-[2] flex items-center gap-2 md:right-[clamp(24px,6vw,80px)] md:bottom-[42px] md:left-auto">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            aria-label={`Slide ${i + 1}`}
-            className="flex cursor-pointer items-center justify-center border-0 bg-transparent p-0"
-          >
-            <motion.span
-              animate={{
-                width: i === active ? 24 : 8,
-                background: i === active ? '#C9A259' : 'rgba(255,255,255,0.4)',
-              }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="block h-2 rounded"
-            />
-          </button>
-        ))}
-      </div>
+      {slides.length > 1 && (
+        <div className="absolute bottom-5 left-5 z-[2] flex items-center gap-2 md:right-[clamp(24px,6vw,80px)] md:bottom-[42px] md:left-auto">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Slide ${i + 1}`}
+              className="flex cursor-pointer items-center justify-center border-0 bg-transparent p-0"
+            >
+              <motion.span
+                animate={{
+                  width: i === active ? 24 : 8,
+                  background: i === active ? '#C9A259' : 'rgba(255,255,255,0.4)',
+                }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="block h-2 rounded"
+              />
+            </button>
+          ))}
+        </div>
+      )}
 
-      {auto && (
+      {auto && slides.length > 1 && (
         <motion.div
           key={active}
           initial={{ scaleX: 0 }}
